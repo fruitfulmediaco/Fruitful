@@ -20,7 +20,7 @@
       overflow-x: hidden;
     }
 
-    /* Fixed Top Navigation */
+    /* Fixed Navigation */
     .top-nav {
       position: fixed;
       top: 0;
@@ -103,11 +103,12 @@
       color: #fff;
     }
 
+    /* Views */
     #homeView {
       display: block;
     }
 
-    /* Full-Screen Hero (100vh with Top Padding for Nav clearance) */
+    /* Full-Screen Hero Banner */
     .hero-container {
       position: relative;
       width: 100vw;
@@ -216,9 +217,19 @@
       justify-content: center;
       cursor: pointer;
       font-size: 18px;
+      transition: all 0.2s ease;
     }
 
-    /* Main Page Content Spacing */
+    .btn-circle:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-circle.liked {
+      color: #ff4757;
+      border-color: #ff4757;
+    }
+
+    /* Content Layout */
     .content-sections {
       padding: 20px 60px 80px 60px;
     }
@@ -230,7 +241,6 @@
       color: #ffffff;
     }
 
-    /* Horizontal Media Slider (General Container) */
     .media-row {
       display: flex;
       gap: 20px;
@@ -243,7 +253,7 @@
       display: none;
     }
 
-    /* 1. Continue Watching (Landscape 16:9) */
+    /* Continue Watching (Landscape 16:9) */
     .continue-card {
       min-width: 300px;
       height: 170px;
@@ -296,7 +306,7 @@
       background: #ff4757;
     }
 
-    /* 2. Genres Bar (Wide Pill Cards) */
+    /* Genres Bar */
     .genre-grid-bar {
       display: flex;
       gap: 16px;
@@ -339,7 +349,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* 3. Movie Posters (9:16 / 2:3 Vertical Poster Ratios for Recommended & Browse) */
+    /* Movie Posters (Vertical 2:3 Ratio) */
     .poster-card {
       min-width: 200px;
       width: 200px;
@@ -390,6 +400,11 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.25);
     }
 
     .genre-screen-title {
@@ -401,6 +416,62 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 28px;
+    }
+
+    /* Modal Overlay for Movie Play/Info */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #141722;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      padding: 30px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .modal-body {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -414,11 +485,11 @@
 
     <div class="center-pills">
       <button class="pill-btn active" id="btnHome"><i class="fa-solid fa-house"></i> Home</button>
-      <button class="pill-btn" id="btnFavs"><i class="fa-solid fa-heart"></i> Favourites</button>
+      <button class="pill-btn" id="btnFavs"><i class="fa-solid fa-heart"></i> Favourites (<span id="favCount">0</span>)</button>
     </div>
 
     <div class="nav-right">
-      <button class="icon-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <button class="icon-btn" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
       <button class="icon-btn"><i class="fa-solid fa-user"></i></button>
     </div>
   </div>
@@ -446,61 +517,25 @@
         </p>
 
         <div class="action-row">
-          <button class="btn-circle"><i class="fa-solid fa-info"></i></button>
-          <button class="btn-play"><i class="fa-solid fa-play"></i> Play</button>
-          <button class="btn-circle"><i class="fa-regular fa-heart"></i></button>
+          <button class="btn-circle" id="btnHeroInfo"><i class="fa-solid fa-info"></i></button>
+          <button class="btn-play" id="btnHeroPlay"><i class="fa-solid fa-play"></i> <span id="heroPlayText">Play</span></button>
+          <button class="btn-circle" id="btnHeroLike"><i class="fa-regular fa-heart"></i></button>
         </div>
       </div>
     </div>
 
     <div class="content-sections">
       <h2 class="section-title">Genres</h2>
-      <div class="genre-grid-bar" id="genreBar">
-        </div>
+      <div class="genre-grid-bar" id="genreBar"></div>
 
       <h2 class="section-title">Continue Watching</h2>
-      <div class="media-row">
-        <div class="continue-card">
-          <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=500&auto=format&fit=crop" alt="Neon Skyline">
-          <div class="media-card-info">
-            <div class="media-card-title">Neon Skyline</div>
-            <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
-          </div>
-        </div>
-        <div class="continue-card">
-          <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=500&auto=format&fit=crop" alt="The Last Station">
-          <div class="media-card-info">
-            <div class="media-card-title">The Last Station</div>
-            <div class="progress-bar"><div class="progress-fill" style="width: 30%;"></div></div>
-          </div>
-        </div>
-      </div>
+      <div class="media-row" id="continueRow"></div>
 
       <h2 class="section-title">Recommended for You</h2>
-      <div class="media-row">
-        <div class="poster-card">
-          <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=500&auto=format&fit=crop" alt="Orbiting Dust">
-          <div class="media-card-info">
-            <div class="media-card-title">Orbiting Dust</div>
-          </div>
-        </div>
-        <div class="poster-card">
-          <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=500&auto=format&fit=crop" alt="Monochrome">
-          <div class="media-card-info">
-            <div class="media-card-title">Monochrome</div>
-          </div>
-        </div>
-        <div class="poster-card">
-          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=500&auto=format&fit=crop" alt="Silent Passage">
-          <div class="media-card-info">
-            <div class="media-card-title">Silent Passage</div>
-          </div>
-        </div>
-      </div>
+      <div class="media-row" id="recommendedRow"></div>
 
       <h2 class="section-title">Browse Library</h2>
-      <div class="media-row" id="browseRow">
-        </div>
+      <div class="media-row" id="browseRow"></div>
     </div>
   </div>
 
@@ -509,8 +544,16 @@
       <button class="btn-back" id="btnBackToHome"><i class="fa-solid fa-arrow-left"></i> Back</button>
       <h1 class="genre-screen-title" id="selectedGenreTitle">Sci-Fi Movies</h1>
     </div>
-    <div class="genre-movies-grid" id="genreGrid">
-      </div>
+    <div class="genre-movies-grid" id="genreGrid"></div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose"><i class="fa-solid fa-xmark"></i></button>
+      <h2 class="modal-title" id="modalTitle">Movie Title</h2>
+      <p class="modal-body" id="modalBody">Details go here...</p>
+      <button class="btn-play" id="modalPlayBtn"><i class="fa-solid fa-play"></i> Play Movie</button>
+    </div>
   </div>
 
   <script>
@@ -523,21 +566,30 @@
     ];
 
     const moviesList = [
-      { title: "Echoes of Silence", genre: "Sci-Fi", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=500&auto=format&fit=crop" },
-      { title: "Neon Skyline", genre: "Thriller", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=500&auto=format&fit=crop" },
-      { title: "The Last Station", genre: "Drama", img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=500&auto=format&fit=crop" },
-      { title: "Monochrome", genre: "Horror", img: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=500&auto=format&fit=crop" },
-      { title: "Orbiting Dust", genre: "Animation", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=500&auto=format&fit=crop" }
+      { id: 1, title: "Echoes of Silence", genre: "Sci-Fi", desc: "An operator receives unmonitored transmissions from a deep space frequency.", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=500&auto=format&fit=crop", progress: 0 },
+      { id: 2, title: "Neon Skyline", genre: "Thriller", desc: "A night courier intercepts a drive containing corporate espionage.", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=500&auto=format&fit=crop", progress: 65 },
+      { id: 3, title: "The Last Station", genre: "Drama", desc: "Two strangers share stories on the final night of a rural train line.", img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=500&auto=format&fit=crop", progress: 30 },
+      { id: 4, title: "Monochrome", genre: "Horror", desc: "An archivist notices a figure moving independently across unreleased film reels.", img: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=500&auto=format&fit=crop", progress: 0 },
+      { id: 5, title: "Orbiting Dust", genre: "Animation", desc: "A hand-drawn visual journey following a single dust particle through historic projections.", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=500&auto=format&fit=crop", progress: 0 }
     ];
 
+    let favorites = [];
+    let isHeroPlaying = false;
+
+    // Elements
     const homeView = document.getElementById('homeView');
     const genreView = document.getElementById('genreView');
     const genreBar = document.getElementById('genreBar');
+    const continueRow = document.getElementById('continueRow');
+    const recommendedRow = document.getElementById('recommendedRow');
     const browseRow = document.getElementById('browseRow');
     const genreGrid = document.getElementById('genreGrid');
     const selectedGenreTitle = document.getElementById('selectedGenreTitle');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
 
-    // Build Genre Bar
+    // Init Genres Bar
     genreData.forEach(item => {
       const card = document.createElement('div');
       card.className = 'genre-btn-card';
@@ -549,8 +601,39 @@
       genreBar.appendChild(card);
     });
 
-    // Populate Browse Row with Poster Cards
-    moviesList.forEach(m => {
+    // Populate Movies Across Rows
+    function renderMovieRows() {
+      continueRow.innerHTML = '';
+      recommendedRow.innerHTML = '';
+      browseRow.innerHTML = '';
+
+      moviesList.forEach(m => {
+        // Continue Watching Row (16:9 cards)
+        if (m.progress > 0) {
+          const cCard = document.createElement('div');
+          cCard.className = 'continue-card';
+          cCard.innerHTML = `
+            <img src="${m.img}" alt="${m.title}">
+            <div class="media-card-info">
+              <div class="media-card-title">${m.title}</div>
+              <div class="progress-bar"><div class="progress-fill" style="width: ${m.progress}%;"></div></div>
+            </div>
+          `;
+          cCard.addEventListener('click', () => openModal(m));
+          continueRow.appendChild(cCard);
+        }
+
+        // Recommended Row (2:3 Poster Cards)
+        const rCard = createPosterCard(m);
+        recommendedRow.appendChild(rCard);
+
+        // Browse Row (2:3 Poster Cards)
+        const bCard = createPosterCard(m);
+        browseRow.appendChild(bCard);
+      });
+    }
+
+    function createPosterCard(m) {
       const card = document.createElement('div');
       card.className = 'poster-card';
       card.innerHTML = `
@@ -559,10 +642,53 @@
           <div class="media-card-title">${m.title}</div>
         </div>
       `;
-      browseRow.appendChild(card);
+      card.addEventListener('click', () => openModal(m));
+      return card;
+    }
+
+    // Modal Interaction
+    function openModal(movie) {
+      modalTitle.textContent = movie.title;
+      modalBody.textContent = movie.desc;
+      modalOverlay.classList.add('active');
+    }
+
+    document.getElementById('modalClose').addEventListener('click', () => {
+      modalOverlay.classList.remove('active');
     });
 
-    // Open Genre View Screen
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+    });
+
+    // Hero Controls
+    const btnHeroLike = document.getElementById('btnHeroLike');
+    const btnHeroPlay = document.getElementById('btnHeroPlay');
+    const heroPlayText = document.getElementById('heroPlayText');
+
+    btnHeroLike.addEventListener('click', () => {
+      const isFav = favorites.includes(1);
+      if (isFav) {
+        favorites = favorites.filter(id => id !== 1);
+        btnHeroLike.classList.remove('liked');
+        btnHeroLike.querySelector('i').className = 'fa-regular fa-heart';
+      } else {
+        favorites.push(1);
+        btnHeroLike.classList.add('liked');
+        btnHeroLike.querySelector('i').className = 'fa-solid fa-heart';
+      }
+      document.getElementById('favCount').textContent = favorites.length;
+    });
+
+    btnHeroPlay.addEventListener('click', () => {
+      isHeroPlaying = !isHeroPlaying;
+      heroPlayText.textContent = isHeroPlaying ? "Pause" : "Play";
+      btnHeroPlay.querySelector('i').className = isHeroPlaying ? "fa-solid fa-pause" : "fa-solid fa-play";
+    });
+
+    document.getElementById('btnHeroInfo').addEventListener('click', () => openModal(moviesList[0]));
+
+    // Navigation & Views
     function openGenreScreen(genreName) {
       homeView.style.display = 'none';
       genreView.style.display = 'block';
@@ -570,17 +696,14 @@
       window.scrollTo(0, 0);
 
       const filtered = moviesList.filter(m => m.genre === genreName);
-      genreGrid.innerHTML = filtered.map(m => `
-        <div class="poster-card" style="width: 100%;">
-          <img src="${m.img}" alt="${m.title}">
-          <div class="media-card-info">
-            <div class="media-card-title">${m.title}</div>
-          </div>
-        </div>
-      `).join('');
+      genreGrid.innerHTML = '';
+      filtered.forEach(m => {
+        const card = createPosterCard(m);
+        card.style.width = '100%';
+        genreGrid.appendChild(card);
+      });
     }
 
-    // Return to Home View
     function goHome() {
       genreView.style.display = 'none';
       homeView.style.display = 'block';
@@ -590,6 +713,9 @@
     document.getElementById('btnBackToHome').addEventListener('click', goHome);
     document.getElementById('logoBtn').addEventListener('click', goHome);
     document.getElementById('btnHome').addEventListener('click', goHome);
+
+    // Init
+    renderMovieRows();
   </script>
 </body>
 </html>
