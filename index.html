@@ -18,39 +18,20 @@
       background-color: #0b0d14;
       color: #ffffff;
       overflow-x: hidden;
-      height: 100vh;
-    }
-
-    /* Full-Screen Hero Background */
-    .hero-container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 20px 40px;
-      transition: background-image 0.5s ease-in-out;
-    }
-
-    /* Gradient Overlay */
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, #0b0d14 10%, rgba(11, 13, 20, 0.4) 50%, rgba(11, 13, 20, 0.7) 100%);
-      z-index: 1;
     }
 
     /* Floating Navigation Bar */
     .top-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
-      z-index: 10;
+      padding: 20px 40px;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(11, 13, 20, 0.9) 0%, transparent 100%);
     }
 
     .nav-left, .nav-right {
@@ -66,6 +47,7 @@
       text-transform: uppercase;
       color: #fff;
       margin-right: 15px;
+      cursor: pointer;
     }
 
     .icon-btn {
@@ -120,22 +102,36 @@
       color: #fff;
     }
 
-    /* Main Hero Details Overlay */
+    /* Home View Container */
+    #homeView {
+      display: block;
+    }
+
+    /* Fixed Hero Background */
+    .hero-container {
+      position: relative;
+      width: 100vw;
+      height: 80vh;
+      background: linear-gradient(to top, #0b0d14 5%, rgba(11, 13, 20, 0.3) 50%, rgba(11, 13, 20, 0.7) 100%),
+                  url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 40px;
+    }
+
     .hero-content {
       max-width: 650px;
-      margin-top: auto;
-      margin-bottom: 25px;
-      z-index: 5;
+      margin-bottom: 20px;
     }
 
     .title-logo {
-      font-size: 60px;
+      font-size: 56px;
       font-weight: 900;
       letter-spacing: -1.5px;
       text-transform: uppercase;
       margin-bottom: 12px;
       text-shadow: 0 4px 20px rgba(0,0,0,0.8);
-      transition: opacity 0.2s ease;
     }
 
     .badge-row {
@@ -178,7 +174,6 @@
       line-height: 1.5;
       color: rgba(255, 255, 255, 0.8);
       margin-bottom: 22px;
-      min-height: 42px;
     }
 
     .action-row {
@@ -219,308 +214,341 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
-    .btn-circle:hover {
-      background: rgba(255, 255, 255, 0.25);
+    /* Section Content Styling */
+    .content-sections {
+      padding: 0 40px 60px 40px;
     }
 
-    .btn-circle.liked {
-      color: #ff4757;
-      border-color: #ff4757;
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 35px 0 15px 0;
+      color: #ffffff;
     }
 
-    /* Bottom Genre Cards Carousel */
-    .bottom-carousel {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 15px;
-      z-index: 5;
-      margin-bottom: 10px;
+    /* Horizontal Media Slider */
+    .media-row {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scrollbar-width: none;
     }
 
-    .category-card {
-      position: relative;
-      height: 105px;
-      border-radius: 16px;
+    .media-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .media-card {
+      min-width: 220px;
+      height: 130px;
+      border-radius: 12px;
       overflow: hidden;
-      border: 2px solid transparent;
+      position: relative;
       cursor: pointer;
-      transition: all 0.25 ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
-    .category-card.active {
-      border-color: #ffffff;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    .media-card:hover {
+      transform: scale(1.04);
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
-    .category-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .category-card img {
+    .media-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.6);
-      transition: filter 0.2s ease;
     }
 
-    .category-card:hover img, .category-card.active img {
-      filter: brightness(0.85);
+    .media-card-info {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 12px;
     }
 
-    .category-title {
+    .media-card-title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #ff4757;
+    }
+
+    /* Genre Buttons Row */
+    .genre-grid-bar {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      margin-top: 10px;
+    }
+
+    .genre-btn-card {
+      min-width: 160px;
+      height: 70px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.2s ease;
+    }
+
+    .genre-btn-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .genre-btn-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.5);
+    }
+
+    .genre-btn-title {
       position: absolute;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-      background: rgba(0, 0, 0, 0.25);
+    }
+
+    /* Dedicated Genre Screen (Hidden by default) */
+    #genreView {
+      display: none;
+      padding: 120px 40px 60px 40px;
+      min-height: 100vh;
+    }
+
+    .genre-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .btn-back {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .genre-screen-title {
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .genre-movies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
     }
   </style>
 </head>
 <body>
 
-  <div class="hero-container" id="heroBg">
-    <div class="hero-overlay"></div>
+  <!-- Navigation -->
+  <div class="top-nav">
+    <div class="nav-left">
+      <button class="icon-btn"><i class="fa-solid fa-bars"></i></button>
+      <span class="brand-logo" id="logoBtn">FRUITFUL</span>
+    </div>
 
-    <!-- Top Nav -->
-    <div class="top-nav">
-      <div class="nav-left">
-        <button class="icon-btn"><i class="fa-solid fa-bars"></i></button>
-        <span class="brand-logo">FRUITFUL</span>
-      </div>
+    <div class="center-pills">
+      <button class="pill-btn active" id="btnHome"><i class="fa-solid fa-house"></i> Home</button>
+      <button class="pill-btn" id="btnFavs"><i class="fa-solid fa-heart"></i> Favourites</button>
+    </div>
 
-      <div class="center-pills">
-        <button class="pill-btn active" id="btnHome"><i class="fa-solid fa-house"></i> Home</button>
-        <button class="pill-btn" id="btnFavs"><i class="fa-solid fa-heart"></i> Favourites (<span id="favCount">0</span>)</button>
-      </div>
+    <div class="nav-right">
+      <button class="icon-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <button class="icon-btn"><i class="fa-solid fa-user"></i></button>
+    </div>
+  </div>
 
-      <div class="nav-right">
-        <button class="icon-btn"><i class="fa-solid fa-border-all"></i></button>
-        <button class="icon-btn"><i class="fa-solid fa-users"></i></button>
-        <button class="icon-btn"><i class="fa-solid fa-cast"></i></button>
-        <button class="icon-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-        <button class="icon-btn"><i class="fa-solid fa-user"></i></button>
+  <!-- MAIN HOME VIEW -->
+  <div id="homeView">
+    <!-- Fixed Hero Banner -->
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1 class="title-logo">ECHOES OF SILENCE</h1>
+        
+        <div class="badge-row">
+          <span class="rating-badge">IMDb 8.2</span>
+          <span class="meta-text">2026</span>
+          <span class="meta-text" style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">PG-13</span>
+          <span class="meta-text">18 min</span>
+        </div>
+
+        <div class="genre-row">
+          <span>Sci-Fi</span>
+          <span>Mystery</span>
+          <span>Short Film</span>
+        </div>
+
+        <p class="description">
+          In an isolated research station, an operator receives unmonitored transmissions from a deep space frequency broadcasting independent signals.
+        </p>
+
+        <div class="action-row">
+          <button class="btn-circle"><i class="fa-solid fa-info"></i></button>
+          <button class="btn-play"><i class="fa-solid fa-play"></i> Play</button>
+          <button class="btn-circle"><i class="fa-regular fa-heart"></i></button>
+        </div>
       </div>
     </div>
 
-    <!-- Hero Main Info -->
-    <div class="hero-content">
-      <h1 class="title-logo" id="heroTitle">ECHOES OF SILENCE</h1>
-      
-      <div class="badge-row">
-        <span class="rating-badge" id="heroRating">IMDb 8.2</span>
-        <span class="meta-text" id="heroYear">2026</span>
-        <span class="meta-text" id="heroMaturity" style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px;">PG-13</span>
-        <span class="meta-text" id="heroDuration">18 min</span>
+    <div class="content-sections">
+      <!-- Genres Bar -->
+      <h2 class="section-title">Genres</h2>
+      <div class="genre-grid-bar" id="genreBar">
+        <!-- Built dynamically -->
       </div>
 
-      <div class="genre-row" id="heroTags">
-        <span>Sci-Fi</span>
-        <span>Mystery</span>
-        <span>Short Film</span>
+      <!-- Continue Watching -->
+      <h2 class="section-title">Continue Watching</h2>
+      <div class="media-row">
+        <div class="media-card">
+          <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=500&auto=format&fit=crop" alt="Neon Skyline">
+          <div class="media-card-info">
+            <div class="media-card-title">Neon Skyline</div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
+          </div>
+        </div>
+        <div class="media-card">
+          <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=500&auto=format&fit=crop" alt="The Last Station">
+          <div class="media-card-info">
+            <div class="media-card-title">The Last Station</div>
+            <div class="progress-bar"><div class="progress-fill" style="width: 30%;"></div></div>
+          </div>
+        </div>
       </div>
 
-      <p class="description" id="heroDesc">
-        In an isolated research station, an operator receives unmonitored transmissions from a deep space frequency broadcasting independent transmissions.
-      </p>
+      <!-- Recommended -->
+      <h2 class="section-title">Recommended for You</h2>
+      <div class="media-row">
+        <div class="media-card">
+          <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=500&auto=format&fit=crop" alt="Orbiting Dust">
+          <div class="media-card-info">
+            <div class="media-card-title">Orbiting Dust</div>
+          </div>
+        </div>
+        <div class="media-card">
+          <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=500&auto=format&fit=crop" alt="Monochrome">
+          <div class="media-card-info">
+            <div class="media-card-title">Monochrome</div>
+          </div>
+        </div>
+      </div>
 
-      <div class="action-row">
-        <button class="btn-circle" id="btnInfo"><i class="fa-solid fa-info"></i></button>
-        <button class="btn-play" id="btnPlay"><i class="fa-solid fa-play"></i> <span id="playText">Play</span></button>
-        <button class="btn-circle" id="btnLike"><i class="fa-regular fa-heart"></i></button>
+      <!-- Browse All -->
+      <h2 class="section-title">Browse Library</h2>
+      <div class="media-row" id="browseRow">
+        <!-- Content injected via JS -->
       </div>
     </div>
+  </div>
 
-    <!-- Bottom Genre Selector -->
-    <div class="bottom-carousel" id="genreCarousel">
-      <!-- Generated via JS -->
+  <!-- DEDICATED GENRE VIEW -->
+  <div id="genreView">
+    <div class="genre-header">
+      <button class="btn-back" id="btnBackToHome"><i class="fa-solid fa-arrow-left"></i> Back</button>
+      <h1 class="genre-screen-title" id="selectedGenreTitle">Sci-Fi Movies</h1>
+    </div>
+    <div class="genre-movies-grid" id="genreGrid">
+      <!-- Grid items injected dynamically -->
     </div>
   </div>
 
   <script>
-    const mediaData = [
-      {
-        genre: "Sci-Fi",
-        title: "ECHOES OF SILENCE",
-        bg: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2000&auto=format&fit=crop",
-        cardImg: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=500&auto=format&fit=crop",
-        rating: "IMDb 8.2",
-        year: "2026",
-        maturity: "PG-13",
-        duration: "18 min",
-        tags: ["Sci-Fi", "Mystery", "Short Film"],
-        desc: "In an isolated research station, an operator receives unmonitored transmissions from a deep space frequency broadcasting independent signals."
-      },
-      {
-        genre: "Thriller",
-        title: "NEON SKYLINE",
-        bg: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=2000&auto=format&fit=crop",
-        cardImg: "https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=500&auto=format&fit=crop",
-        rating: "IMDb 7.9",
-        year: "2025",
-        maturity: "R",
-        duration: "24 min",
-        tags: ["Thriller", "Neo-Noir", "Crime"],
-        desc: "A night courier working the rain-slicked city center accidentally intercepts a drive containing high-stakes corporate espionage."
-      },
-      {
-        genre: "Drama",
-        title: "THE LAST STATION",
-        bg: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2000&auto=format&fit=crop",
-        cardImg: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=500&auto=format&fit=crop",
-        rating: "IMDb 8.5",
-        year: "2026",
-        maturity: "PG",
-        duration: "14 min",
-        tags: ["Drama", "Indie", "Narrative"],
-        desc: "On the final night before a rural train line closes forever, two strangers share stories that alter their choices for the future."
-      },
-      {
-        genre: "Horror",
-        title: "MONOCHROME",
-        bg: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=2000&auto=format&fit=crop",
-        cardImg: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=500&auto=format&fit=crop",
-        rating: "IMDb 7.4",
-        year: "2025",
-        maturity: "R",
-        duration: "11 min",
-        tags: ["Horror", "Supernatural"],
-        desc: "An archivist reviewing damaged 16mm film reels notices a shadowy figure moving independently between different unreleased movies."
-      },
-      {
-        genre: "Animation",
-        title: "ORBITING DUST",
-        bg: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2000&auto=format&fit=crop",
-        cardImg: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=500&auto=format&fit=crop",
-        rating: "IMDb 8.8",
-        year: "2026",
-        maturity: "G",
-        duration: "09 min",
-        tags: ["Animation", "Visual", "Short"],
-        desc: "A hand-drawn visual journey following a single dust particle drifting through historic moments of cinematic projection."
-      }
+    const genreData = [
+      { name: "Sci-Fi", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=500&auto=format&fit=crop" },
+      { name: "Thriller", img: "https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=500&auto=format&fit=crop" },
+      { name: "Drama", img: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=500&auto=format&fit=crop" },
+      { name: "Horror", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=500&auto=format&fit=crop" },
+      { name: "Animation", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=500&auto=format&fit=crop" }
     ];
 
-    let currentIndex = 0;
-    let favorites = [];
-    let isPlaying = false;
+    const moviesList = [
+      { title: "Echoes of Silence", genre: "Sci-Fi", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=500&auto=format&fit=crop" },
+      { title: "Neon Skyline", genre: "Thriller", img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=500&auto=format&fit=crop" },
+      { title: "The Last Station", genre: "Drama", img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=500&auto=format&fit=crop" },
+      { title: "Monochrome", genre: "Horror", img: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=500&auto=format&fit=crop" },
+      { title: "Orbiting Dust", genre: "Animation", img: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=500&auto=format&fit=crop" }
+    ];
 
-    // Elements
-    const heroBg = document.getElementById('heroBg');
-    const heroTitle = document.getElementById('heroTitle');
-    const heroRating = document.getElementById('heroRating');
-    const heroYear = document.getElementById('heroYear');
-    const heroMaturity = document.getElementById('heroMaturity');
-    const heroDuration = document.getElementById('heroDuration');
-    const heroTags = document.getElementById('heroTags');
-    const heroDesc = document.getElementById('heroDesc');
-    const genreCarousel = document.getElementById('genreCarousel');
-    const btnLike = document.getElementById('btnLike');
-    const btnPlay = document.getElementById('btnPlay');
-    const playText = document.getElementById('playText');
-    const favCount = document.getElementById('favCount');
+    const homeView = document.getElementById('homeView');
+    const genreView = document.getElementById('genreView');
+    const genreBar = document.getElementById('genreBar');
+    const genreGrid = document.getElementById('genreGrid');
+    const selectedGenreTitle = document.getElementById('selectedGenreTitle');
 
-    // Build Cards
-    function renderGenreCards() {
-      genreCarousel.innerHTML = '';
-      mediaData.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = `category-card ${index === currentIndex ? 'active' : ''}`;
-        card.innerHTML = `
-          <img src="${item.cardImg}" alt="${item.genre}">
-          <div class="category-title">${item.genre}</div>
-        `;
-        card.addEventListener('click', () => setFeatured(index));
-        genreCarousel.appendChild(card);
-      });
+    // Build Genre Selection Bar
+    genreData.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'genre-btn-card';
+      card.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <div class="genre-btn-title">${item.name}</div>
+      `;
+      card.addEventListener('click', () => openGenreScreen(item.name));
+      genreBar.appendChild(card);
+    });
+
+    // Open Genre Screen
+    function openGenreScreen(genreName) {
+      homeView.style.display = 'none';
+      genreView.style.display = 'block';
+      selectedGenreTitle.textContent = `${genreName} Movies`;
+      window.scrollTo(0, 0);
+
+      const filtered = moviesList.filter(m => m.genre === genreName);
+      genreGrid.innerHTML = filtered.map(m => `
+        <div class="media-card" style="height: 140px;">
+          <img src="${m.img}" alt="${m.title}">
+          <div class="media-card-info">
+            <div class="media-card-title">${m.title}</div>
+          </div>
+        </div>
+      `).join('');
     }
 
-    // Update Hero Content
-    function setFeatured(index) {
-      currentIndex = index;
-      const data = mediaData[index];
-
-      heroBg.style.backgroundImage = `url('${data.bg}')`;
-      heroTitle.textContent = data.title;
-      heroRating.textContent = data.rating;
-      heroYear.textContent = data.year;
-      heroMaturity.textContent = data.maturity;
-      heroDuration.textContent = data.duration;
-      heroDesc.textContent = data.desc;
-
-      heroTags.innerHTML = data.tags.map(tag => `<span>${tag}</span>`).join('');
-
-      // Update Active Card Outline
-      document.querySelectorAll('.category-card').forEach((card, idx) => {
-        card.classList.toggle('active', idx === index);
-      });
-
-      // Sync Like Button State
-      updateLikeBtnState();
-      
-      // Reset Play State
-      isPlaying = false;
-      playText.textContent = "Play";
-      btnPlay.querySelector('i').className = "fa-solid fa-play";
+    // Go Back to Home Screen
+    function goHome() {
+      genreView.style.display = 'none';
+      homeView.style.display = 'block';
+      window.scrollTo(0, 0);
     }
 
-    // Like Toggle
-    function updateLikeBtnState() {
-      const isFav = favorites.includes(currentIndex);
-      const icon = btnLike.querySelector('i');
-      if (isFav) {
-        btnLike.classList.add('liked');
-        icon.className = 'fa-solid fa-heart';
-      } else {
-        btnLike.classList.remove('liked');
-        icon.className = 'fa-regular fa-heart';
-      }
-    }
-
-    btnLike.addEventListener('click', () => {
-      const favIndex = favorites.indexOf(currentIndex);
-      if (favIndex > -1) {
-        favorites.splice(favIndex, 1);
-      } else {
-        favorites.push(currentIndex);
-      }
-      favCount.textContent = favorites.length;
-      updateLikeBtnState();
-    });
-
-    // Play Toggle
-    btnPlay.addEventListener('click', () => {
-      isPlaying = !isPlaying;
-      if (isPlaying) {
-        playText.textContent = "Playing...";
-        btnPlay.querySelector('i').className = "fa-solid fa-pause";
-      } else {
-        playText.textContent = "Play";
-        btnPlay.querySelector('i').className = "fa-solid fa-play";
-      }
-    });
-
-    // Navigation Pills Toggle
-    document.getElementById('btnHome').addEventListener('click', function() {
-      this.classList.add('active');
-      document.getElementById('btnFavs').classList.remove('active');
-    });
-
-    document.getElementById('btnFavs').addEventListener('click', function() {
-      this.classList.add('active');
-      document.getElementById('btnHome').classList.remove('active');
-    });
-
-    // Init
-    renderGenreCards();
-    setFeatured(0);
+    document.getElementById('btnBackToHome').addEventListener('click', goHome);
+    document.getElementById('logoBtn').addEventListener('click', goHome);
+    document.getElementById('btnHome').addEventListener('click', goHome);
   </script>
 </body>
 </html>
