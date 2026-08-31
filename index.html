@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fruitful</title>
+  <title>Fruitful - Interactive Streaming</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -103,12 +103,11 @@
       color: #fff;
     }
 
-    /* Views */
-    #homeView {
-      display: block;
-    }
+    /* Views Container */
+    #homeView { display: block; }
+    #genreView { display: none; padding: 140px 60px 80px 60px; min-height: 100vh; }
 
-    /* Full-Screen Hero Banner */
+    /* Hero Banner */
     .hero-container {
       position: relative;
       width: 100vw;
@@ -121,9 +120,7 @@
       padding: 0 60px 80px 60px;
     }
 
-    .hero-content {
-      max-width: 750px;
-    }
+    .hero-content { max-width: 750px; }
 
     .title-logo {
       font-size: 72px;
@@ -220,19 +217,11 @@
       transition: all 0.2s ease;
     }
 
-    .btn-circle:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
-
-    .btn-circle.liked {
-      color: #ff4757;
-      border-color: #ff4757;
-    }
+    .btn-circle:hover { background: rgba(255, 255, 255, 0.25); }
+    .btn-circle.liked { color: #ff4757; border-color: #ff4757; }
 
     /* Content Layout */
-    .content-sections {
-      padding: 20px 60px 80px 60px;
-    }
+    .content-sections { padding: 20px 60px 80px 60px; }
 
     .section-title {
       font-size: 24px;
@@ -249,11 +238,9 @@
       scrollbar-width: none;
     }
 
-    .media-row::-webkit-scrollbar {
-      display: none;
-    }
+    .media-row::-webkit-scrollbar { display: none; }
 
-    /* Continue Watching (Landscape 16:9) */
+    /* Cards */
     .continue-card {
       min-width: 300px;
       height: 170px;
@@ -271,11 +258,7 @@
       border-color: rgba(255, 255, 255, 0.4);
     }
 
-    .continue-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .continue-card img { width: 100%; height: 100%; object-fit: cover; }
 
     .media-card-info {
       position: absolute;
@@ -287,10 +270,7 @@
       padding: 14px;
     }
 
-    .media-card-title {
-      font-size: 15px;
-      font-weight: 700;
-    }
+    .media-card-title { font-size: 15px; font-weight: 700; }
 
     .progress-bar {
       width: 100%;
@@ -301,18 +281,9 @@
       overflow: hidden;
     }
 
-    .progress-fill {
-      height: 100%;
-      background: #ff4757;
-    }
+    .progress-fill { height: 100%; background: #ff4757; }
 
-    /* Genres Bar */
-    .genre-grid-bar {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
+    .genre-grid-bar { display: flex; gap: 16px; overflow-x: auto; scrollbar-width: none; }
 
     .genre-btn-card {
       min-width: 200px;
@@ -331,12 +302,7 @@
       border-color: rgba(255, 255, 255, 0.5);
     }
 
-    .genre-btn-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.45);
-    }
+    .genre-btn-card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.45); }
 
     .genre-btn-title {
       position: absolute;
@@ -349,7 +315,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Movie Posters (Vertical 2:3 Ratio) */
     .poster-card {
       min-width: 200px;
       width: 200px;
@@ -369,25 +334,10 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
     }
 
-    .poster-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .poster-card img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Dedicated Genre Screen */
-    #genreView {
-      display: none;
-      padding: 140px 60px 80px 60px;
-      min-height: 100vh;
-    }
-
-    .genre-header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 40px;
-    }
+    /* Dedicated Screen UI */
+    .genre-header { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
 
     .btn-back {
       background: rgba(255, 255, 255, 0.1);
@@ -403,22 +353,11 @@
       transition: all 0.2s ease;
     }
 
-    .btn-back:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
+    .btn-back:hover { background: rgba(255, 255, 255, 0.25); }
+    .genre-screen-title { font-size: 38px; font-weight: 900; }
+    .genre-movies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 28px; }
 
-    .genre-screen-title {
-      font-size: 38px;
-      font-weight: 900;
-    }
-
-    .genre-movies-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 28px;
-    }
-
-    /* Modal Styling */
+    /* Modals & Overlays */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -431,9 +370,7 @@
       padding: 20px;
     }
 
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
 
     .modal-card {
       background: #141722;
@@ -461,27 +398,11 @@
       justify-content: center;
     }
 
-    .modal-title {
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
+    .modal-title { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
+    .modal-body { font-size: 15px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 20px; }
 
-    .modal-body {
-      font-size: 15px;
-      color: rgba(255, 255, 255, 0.8);
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    /* Account Modal Profile Styling */
-    .account-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
+    /* Account Menu */
+    .account-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
     .account-avatar {
       width: 64px;
       height: 64px;
@@ -494,22 +415,10 @@
       font-weight: 800;
     }
 
-    .account-details h3 {
-      font-size: 20px;
-      font-weight: 700;
-    }
+    .account-details h3 { font-size: 20px; font-weight: 700; }
+    .account-details p { font-size: 14px; color: rgba(255, 255, 255, 0.6); }
 
-    .account-details p {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .account-menu-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
+    .account-menu-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
 
     .account-menu-item {
       display: flex;
@@ -525,9 +434,7 @@
       transition: background 0.2s ease;
     }
 
-    .account-menu-item:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
+    .account-menu-item:hover { background: rgba(255, 255, 255, 0.15); }
 
     .btn-logout {
       width: 100%;
@@ -541,17 +448,68 @@
       transition: all 0.2s ease;
     }
 
-    .btn-logout:hover {
-      background: #ff4757;
+    .btn-logout:hover { background: #ff4757; color: #fff; }
+
+    /* Sidebar Drawer */
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100vh;
+      background: #10131d;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      z-index: 150;
+      padding: 100px 30px 30px 30px;
+      transition: left 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .side-drawer.open { left: 0; }
+
+    .drawer-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    /* Search Input Overlay Bar */
+    .search-input-box {
+      width: 100%;
+      padding: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
       color: #fff;
+      font-size: 16px;
+      margin-bottom: 20px;
+      outline: none;
     }
   </style>
 </head>
 <body>
 
+  <div class="side-drawer" id="sideDrawer">
+    <div class="drawer-item" id="drawerHome"><i class="fa-solid fa-house"></i> Home</div>
+    <div class="drawer-item" id="drawerMovies"><i class="fa-solid fa-film"></i> Movies</div>
+    <div class="drawer-item" id="drawerSeries"><i class="fa-solid fa-tv"></i> Series</div>
+    <div class="drawer-item" id="drawerMyList"><i class="fa-solid fa-bookmark"></i> My List</div>
+    <div class="drawer-item" id="drawerSettings"><i class="fa-solid fa-gear"></i> Settings</div>
+  </div>
+
   <div class="top-nav">
     <div class="nav-left">
-      <button class="icon-btn"><i class="fa-solid fa-bars"></i></button>
+      <button class="icon-btn" id="btnSideMenu"><i class="fa-solid fa-bars"></i></button>
       <span class="brand-logo" id="logoBtn">FRUITFUL</span>
     </div>
 
@@ -628,6 +586,15 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="searchModal">
+    <div class="modal-card">
+      <button class="modal-close" id="searchModalClose"><i class="fa-solid fa-xmark"></i></button>
+      <h2 class="modal-title">Search Library</h2>
+      <input type="text" class="search-input-box" id="searchInput" placeholder="Type a title or genre...">
+      <div class="genre-movies-grid" id="searchResultsGrid"></div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="accountModal">
     <div class="modal-card">
       <button class="modal-close" id="accountModalClose"><i class="fa-solid fa-xmark"></i></button>
@@ -641,15 +608,15 @@
       </div>
 
       <div class="account-menu-list">
-        <div class="account-menu-item">
+        <div class="account-menu-item" id="accPref">
           <span><i class="fa-solid fa-sliders" style="margin-right: 10px;"></i> Preferences</span>
           <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
         </div>
-        <div class="account-menu-item">
+        <div class="account-menu-item" id="accNotif">
           <span><i class="fa-solid fa-bell" style="margin-right: 10px;"></i> Notifications</span>
           <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
         </div>
-        <div class="account-menu-item">
+        <div class="account-menu-item" id="accSub">
           <span><i class="fa-solid fa-shield-halved" style="margin-right: 10px;"></i> Subscription & Billing</span>
           <i class="fa-solid fa-chevron-right" style="font-size: 12px; opacity: 0.5;"></i>
         </div>
@@ -679,111 +646,63 @@
     let favorites = [];
     let isHeroPlaying = false;
 
-    // Elements
+    // View References
     const homeView = document.getElementById('homeView');
     const genreView = document.getElementById('genreView');
-    const genreBar = document.getElementById('genreBar');
-    const continueRow = document.getElementById('continueRow');
-    const recommendedRow = document.getElementById('recommendedRow');
-    const browseRow = document.getElementById('browseRow');
-    const genreGrid = document.getElementById('genreGrid');
-    const selectedGenreTitle = document.getElementById('selectedGenreTitle');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
+    const sideDrawer = document.getElementById('sideDrawer');
 
-    // Account Modal Elements
-    const btnAccount = document.getElementById('btnAccount');
-    const accountModal = document.getElementById('accountModal');
-    const accountModalClose = document.getElementById('accountModalClose');
-
-    btnAccount.addEventListener('click', () => {
-      accountModal.classList.add('active');
+    // Sidebar Menu Toggle
+    document.getElementById('btnSideMenu').addEventListener('click', () => {
+      sideDrawer.classList.toggle('open');
     });
 
-    accountModalClose.addEventListener('click', () => {
-      accountModal.classList.remove('active');
-    });
-
-    accountModal.addEventListener('click', (e) => {
-      if (e.target === accountModal) accountModal.classList.remove('active');
-    });
-
-    document.getElementById('btnLogout').addEventListener('click', () => {
-      alert("Signed out successfully.");
-      accountModal.classList.remove('active');
-    });
-
-    // Populate Genres Bar
-    genreData.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'genre-btn-card';
-      card.innerHTML = `
-        <img src="${item.img}" alt="${item.name}">
-        <div class="genre-btn-title">${item.name}</div>
-      `;
-      card.addEventListener('click', () => openGenreScreen(item.name));
-      genreBar.appendChild(card);
-    });
-
-    // Render Movie Rows
-    function renderMovieRows() {
-      continueRow.innerHTML = '';
-      recommendedRow.innerHTML = '';
-      browseRow.innerHTML = '';
-
-      moviesList.forEach(m => {
-        if (m.progress > 0) {
-          const cCard = document.createElement('div');
-          cCard.className = 'continue-card';
-          cCard.innerHTML = `
-            <img src="${m.img}" alt="${m.title}">
-            <div class="media-card-info">
-              <div class="media-card-title">${m.title}</div>
-              <div class="progress-bar"><div class="progress-fill" style="width: ${m.progress}%;"></div></div>
-            </div>
-          `;
-          cCard.addEventListener('click', () => openModal(m));
-          continueRow.appendChild(cCard);
-        }
-
-        const rCard = createPosterCard(m);
-        recommendedRow.appendChild(rCard);
-
-        const bCard = createPosterCard(m);
-        browseRow.appendChild(bCard);
+    ['drawerHome', 'drawerMovies', 'drawerSeries', 'drawerMyList', 'drawerSettings'].forEach(id => {
+      document.getElementById(id).addEventListener('click', () => {
+        sideDrawer.classList.remove('open');
+        goHome();
       });
-    }
-
-    function createPosterCard(m) {
-      const card = document.createElement('div');
-      card.className = 'poster-card';
-      card.innerHTML = `
-        <img src="${m.img}" alt="${m.title}">
-        <div class="media-card-info">
-          <div class="media-card-title">${m.title}</div>
-        </div>
-      `;
-      card.addEventListener('click', () => openModal(m));
-      return card;
-    }
-
-    // Modal Operations
-    function openModal(movie) {
-      modalTitle.textContent = movie.title;
-      modalBody.textContent = movie.desc;
-      modalOverlay.classList.add('active');
-    }
-
-    document.getElementById('modalClose').addEventListener('click', () => {
-      modalOverlay.classList.remove('active');
     });
 
-    modalOverlay.addEventListener('click', (e) => {
-      if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+    // Favorites Pill
+    const btnFavs = document.getElementById('btnFavs');
+    btnFavs.addEventListener('click', () => {
+      if (favorites.length === 0) {
+        alert("You haven't added any favorites yet! Click the heart icon on a movie to save it.");
+      } else {
+        openGenreScreen("Favorites");
+      }
     });
 
-    // Hero Actions
+    // Search Toggle & Functionality
+    const btnSearch = document.getElementById('btnSearch');
+    const searchModal = document.getElementById('searchModal');
+    const searchInput = document.getElementById('searchInput');
+    const searchResultsGrid = document.getElementById('searchResultsGrid');
+
+    btnSearch.addEventListener('click', () => {
+      searchModal.classList.add('active');
+      searchInput.focus();
+    });
+
+    document.getElementById('searchModalClose').addEventListener('click', () => {
+      searchModal.classList.remove('active');
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      searchResultsGrid.innerHTML = '';
+      if (!term) return;
+
+      const matched = moviesList.filter(m => m.title.toLowerCase().includes(term) || m.genre.toLowerCase().includes(term));
+      matched.forEach(m => {
+        const card = createPosterCard(m);
+        card.style.width = '100%';
+        card.addEventListener('click', () => searchModal.classList.remove('active'));
+        searchResultsGrid.appendChild(card);
+      });
+    });
+
+    // Hero Interactions
     const btnHeroLike = document.getElementById('btnHeroLike');
     const btnHeroPlay = document.getElementById('btnHeroPlay');
     const heroPlayText = document.getElementById('heroPlayText');
@@ -810,19 +729,110 @@
 
     document.getElementById('btnHeroInfo').addEventListener('click', () => openModal(moviesList[0]));
 
+    // Account Modal Buttons
+    document.getElementById('btnAccount').addEventListener('click', () => {
+      document.getElementById('accountModal').classList.add('active');
+    });
+
+    document.getElementById('accountModalClose').addEventListener('click', () => {
+      document.getElementById('accountModal').classList.remove('active');
+    });
+
+    ['accPref', 'accNotif', 'accSub'].forEach(id => {
+      document.getElementById(id).addEventListener('click', () => alert("Opening account settings..."));
+    });
+
+    document.getElementById('btnLogout').addEventListener('click', () => {
+      alert("Signed out.");
+      document.getElementById('accountModal').classList.remove('active');
+    });
+
+    // Populate Dynamic Rows
+    const genreBar = document.getElementById('genreBar');
+    genreData.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'genre-btn-card';
+      card.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <div class="genre-btn-title">${item.name}</div>
+      `;
+      card.addEventListener('click', () => openGenreScreen(item.name));
+      genreBar.appendChild(card);
+    });
+
+    function renderMovieRows() {
+      const continueRow = document.getElementById('continueRow');
+      const recommendedRow = document.getElementById('recommendedRow');
+      const browseRow = document.getElementById('browseRow');
+
+      continueRow.innerHTML = '';
+      recommendedRow.innerHTML = '';
+      browseRow.innerHTML = '';
+
+      moviesList.forEach(m => {
+        if (m.progress > 0) {
+          const cCard = document.createElement('div');
+          cCard.className = 'continue-card';
+          cCard.innerHTML = `
+            <img src="${m.img}" alt="${m.title}">
+            <div class="media-card-info">
+              <div class="media-card-title">${m.title}</div>
+              <div class="progress-bar"><div class="progress-fill" style="width: ${m.progress}%;"></div></div>
+            </div>
+          `;
+          cCard.addEventListener('click', () => openModal(m));
+          continueRow.appendChild(cCard);
+        }
+
+        recommendedRow.appendChild(createPosterCard(m));
+        browseRow.appendChild(createPosterCard(m));
+      });
+    }
+
+    function createPosterCard(m) {
+      const card = document.createElement('div');
+      card.className = 'poster-card';
+      card.innerHTML = `
+        <img src="${m.img}" alt="${m.title}">
+        <div class="media-card-info">
+          <div class="media-card-title">${m.title}</div>
+        </div>
+      `;
+      card.addEventListener('click', () => openModal(m));
+      return card;
+    }
+
+    // Generic Movie Detail Modal
+    function openModal(movie) {
+      document.getElementById('modalTitle').textContent = movie.title;
+      document.getElementById('modalBody').textContent = movie.desc;
+      const modalPlayBtn = document.getElementById('modalPlayBtn');
+      modalPlayBtn.onclick = () => alert(`Playing: ${movie.title}`);
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    document.getElementById('modalClose').addEventListener('click', () => {
+      document.getElementById('modalOverlay').classList.remove('active');
+    });
+
     // Navigation Switches
     function openGenreScreen(genreName) {
       homeView.style.display = 'none';
       genreView.style.display = 'block';
-      selectedGenreTitle.textContent = `${genreName} Movies`;
+      document.getElementById('selectedGenreTitle').textContent = `${genreName} ${genreName === "Favorites" ? "" : "Movies"}`;
       window.scrollTo(0, 0);
 
-      const filtered = moviesList.filter(m => m.genre === genreName);
-      genreGrid.innerHTML = '';
+      const grid = document.getElementById('genreGrid');
+      grid.innerHTML = '';
+
+      const filtered = genreName === "Favorites" 
+        ? moviesList.filter(m => favorites.includes(m.id)) 
+        : moviesList.filter(m => m.genre === genreName);
+
       filtered.forEach(m => {
         const card = createPosterCard(m);
         card.style.width = '100%';
-        genreGrid.appendChild(card);
+        grid.appendChild(card);
       });
     }
 
@@ -836,7 +846,6 @@
     document.getElementById('logoBtn').addEventListener('click', goHome);
     document.getElementById('btnHome').addEventListener('click', goHome);
 
-    // Initial Load
     renderMovieRows();
   </script>
 </body>
