@@ -55,19 +55,40 @@
       border: 1px solid rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(12px);
       color: #fff;
-      width: 44px;
       height: 44px;
+      padding: 0 16px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 15px;
+      font-weight: 600;
+      gap: 8px;
       transition: all 0.2s ease;
     }
 
     .icon-btn:hover {
       background: rgba(255, 255, 255, 0.25);
+    }
+
+    .avatar-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff4757, #ff6b81);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      transition: transform 0.2s ease;
+    }
+
+    .avatar-btn:hover {
+      transform: scale(1.05);
     }
 
     .center-pills {
@@ -103,7 +124,7 @@
       color: #fff;
     }
 
-    /* Views Container */
+    /* Views */
     #homeView { display: block; }
     #genreView { display: none; padding: 140px 60px 80px 60px; min-height: 100vh; }
 
@@ -377,7 +398,7 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 20px;
       width: 100%;
-      max-width: 550px;
+      max-width: 500px;
       padding: 32px;
       position: relative;
     }
@@ -400,6 +421,68 @@
 
     .modal-title { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
     .modal-body { font-size: 15px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; margin-bottom: 20px; }
+
+    /* Forms & Inputs */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: #ff4757;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: #ff4757;
+      border: none;
+      color: #fff;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      background: #ff6b81;
+    }
+
+    .form-toggle-text {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .form-toggle-link {
+      color: #ff4757;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+    }
 
     /* Account Menu */
     .account-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
@@ -483,7 +566,6 @@
 
     .drawer-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
-    /* Search Input Overlay Bar */
     .search-input-box {
       width: 100%;
       padding: 14px;
@@ -520,7 +602,9 @@
 
     <div class="nav-right">
       <button class="icon-btn" id="btnSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
-      <button class="icon-btn" id="btnAccount"><i class="fa-solid fa-user"></i></button>
+      <div id="accountNavContainer">
+        <button class="icon-btn" id="btnSignIn"><i class="fa-solid fa-user"></i> Sign In</button>
+      </div>
     </div>
   </div>
 
@@ -595,15 +679,46 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-card">
+      <button class="modal-close" id="authModalClose"><i class="fa-solid fa-xmark"></i></button>
+      <h2 class="modal-title" id="authModalTitle">Create Account</h2>
+      
+      <form id="authForm">
+        <div class="form-group" id="nameGroup">
+          <label for="userNameInput">Full Name</label>
+          <input type="text" class="form-input" id="userNameInput" placeholder="Jane Doe" required>
+        </div>
+
+        <div class="form-group">
+          <label for="userEmailInput">Email Address</label>
+          <input type="email" class="form-input" id="userEmailInput" placeholder="name@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="userPassInput">Password</label>
+          <input type="password" class="form-input" id="userPassInput" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn-submit" id="authSubmitBtn">Create Account</button>
+      </form>
+
+      <div class="form-toggle-text">
+        <span id="authTogglePrompt">Already have an account?</span> 
+        <span class="form-toggle-link" id="authToggleBtn">Sign In</span>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="accountModal">
     <div class="modal-card">
       <button class="modal-close" id="accountModalClose"><i class="fa-solid fa-xmark"></i></button>
       
       <div class="account-header">
-        <div class="account-avatar">F</div>
+        <div class="account-avatar" id="accountAvatarLetter">F</div>
         <div class="account-details">
-          <h3>Fruitful Premium</h3>
-          <p>user@fruitfulmedia.com</p>
+          <h3 id="accountProfileName">Fruitful User</h3>
+          <p id="accountProfileEmail">user@fruitfulmedia.com</p>
         </div>
       </div>
 
@@ -645,6 +760,8 @@
 
     let favorites = [];
     let isHeroPlaying = false;
+    let currentUser = null; // Holds profile info once signed in
+    let isSignUpMode = true;
 
     // View References
     const homeView = document.getElementById('homeView');
@@ -664,8 +781,7 @@
     });
 
     // Favorites Pill
-    const btnFavs = document.getElementById('btnFavs');
-    btnFavs.addEventListener('click', () => {
+    document.getElementById('btnFavs').addEventListener('click', () => {
       if (favorites.length === 0) {
         alert("You haven't added any favorites yet! Click the heart icon on a movie to save it.");
       } else {
@@ -673,7 +789,7 @@
       }
     });
 
-    // Search Toggle & Functionality
+    // Search Functions
     const btnSearch = document.getElementById('btnSearch');
     const searchModal = document.getElementById('searchModal');
     const searchInput = document.getElementById('searchInput');
@@ -702,6 +818,85 @@
       });
     });
 
+    // Authentication System
+    const authModal = document.getElementById('authModal');
+    const authModalTitle = document.getElementById('authModalTitle');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    const authTogglePrompt = document.getElementById('authTogglePrompt');
+    const authToggleBtn = document.getElementById('authToggleBtn');
+    const nameGroup = document.getElementById('nameGroup');
+    const userNameInput = document.getElementById('userNameInput');
+    const accountNavContainer = document.getElementById('accountNavContainer');
+
+    function openAuthModal() {
+      authModal.classList.add('active');
+    }
+
+    document.getElementById('btnSignIn').addEventListener('click', openAuthModal);
+    document.getElementById('authModalClose').addEventListener('click', () => authModal.classList.remove('active'));
+
+    authToggleBtn.addEventListener('click', () => {
+      isSignUpMode = !isSignUpMode;
+      if (isSignUpMode) {
+        authModalTitle.textContent = 'Create Account';
+        authSubmitBtn.textContent = 'Create Account';
+        authTogglePrompt.textContent = 'Already have an account?';
+        authToggleBtn.textContent = 'Sign In';
+        nameGroup.style.display = 'flex';
+        userNameInput.required = true;
+      } else {
+        authModalTitle.textContent = 'Sign In';
+        authSubmitBtn.textContent = 'Sign In';
+        authTogglePrompt.textContent = "Don't have an account?";
+        authToggleBtn.textContent = 'Sign Up';
+        nameGroup.style.display = 'none';
+        userNameInput.required = false;
+      }
+    });
+
+    document.getElementById('authForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('userEmailInput').value;
+      const name = isSignUpMode ? userNameInput.value : email.split('@')[0];
+
+      currentUser = { name, email };
+      updateUserUI();
+      authModal.classList.remove('active');
+      document.getElementById('authForm').reset();
+    });
+
+    function updateUserUI() {
+      if (currentUser) {
+        const initial = currentUser.name.charAt(0).toUpperCase();
+        accountNavContainer.innerHTML = `<div class="avatar-btn" id="userAvatarBtn">${initial}</div>`;
+        document.getElementById('userAvatarBtn').addEventListener('click', () => {
+          document.getElementById('accountModal').classList.add('active');
+        });
+
+        document.getElementById('accountAvatarLetter').textContent = initial;
+        document.getElementById('accountProfileName').textContent = currentUser.name;
+        document.getElementById('accountProfileEmail').textContent = currentUser.email;
+      } else {
+        accountNavContainer.innerHTML = `<button class="icon-btn" id="btnSignIn"><i class="fa-solid fa-user"></i> Sign In</button>`;
+        document.getElementById('btnSignIn').addEventListener('click', openAuthModal);
+      }
+    }
+
+    // Account Modal Actions
+    document.getElementById('accountModalClose').addEventListener('click', () => {
+      document.getElementById('accountModal').classList.remove('active');
+    });
+
+    ['accPref', 'accNotif', 'accSub'].forEach(id => {
+      document.getElementById(id).addEventListener('click', () => alert("Opening settings..."));
+    });
+
+    document.getElementById('btnLogout').addEventListener('click', () => {
+      currentUser = null;
+      updateUserUI();
+      document.getElementById('accountModal').classList.remove('active');
+    });
+
     // Hero Interactions
     const btnHeroLike = document.getElementById('btnHeroLike');
     const btnHeroPlay = document.getElementById('btnHeroPlay');
@@ -728,24 +923,6 @@
     });
 
     document.getElementById('btnHeroInfo').addEventListener('click', () => openModal(moviesList[0]));
-
-    // Account Modal Buttons
-    document.getElementById('btnAccount').addEventListener('click', () => {
-      document.getElementById('accountModal').classList.add('active');
-    });
-
-    document.getElementById('accountModalClose').addEventListener('click', () => {
-      document.getElementById('accountModal').classList.remove('active');
-    });
-
-    ['accPref', 'accNotif', 'accSub'].forEach(id => {
-      document.getElementById(id).addEventListener('click', () => alert("Opening account settings..."));
-    });
-
-    document.getElementById('btnLogout').addEventListener('click', () => {
-      alert("Signed out.");
-      document.getElementById('accountModal').classList.remove('active');
-    });
 
     // Populate Dynamic Rows
     const genreBar = document.getElementById('genreBar');
@@ -815,7 +992,7 @@
       document.getElementById('modalOverlay').classList.remove('active');
     });
 
-    // Navigation Switches
+    // View Navigation Switches
     function openGenreScreen(genreName) {
       homeView.style.display = 'none';
       genreView.style.display = 'block';
